@@ -23,29 +23,30 @@ public class echoAR : MonoBehaviour
     // Your echoAR API key
     public string APIKey = "<YOUR_API_KEY>";
     private string serverURL;
+    public string company;
 
     // echoAR Database
     static public Database dbObject;
 
-    void Start()
+    public void Init()
     {
         // Debug logs control
         #if UNITY_EDITOR
             Debug.unityLogger.logEnabled = true;
-        #else
+#else
             Debug.logger.logEnabled = false;
-        #endif
-        
+#endif
+
         // The echoAR server details
-        serverURL = "https://console.echoar.xyz/query?key=" + APIKey;
+        serverURL = "https://console.echoar.xyz/query?key=" + APIKey + "&data=company" + "&value=" + company;
 
         // Run the database query subroutine followed by assets download subroutine
         try
         {
             // Query database for all the entires
+            //StartCoroutine(QueryDatabase(serverURL));
+            //What to query a single entry? Replace the above line with:
             StartCoroutine(QueryDatabase(serverURL));
-            // What to query a single entry? Replace the above line with:
-            // StartCoroutine(QueryDatabase(serverURL + "&entry=<ENTRY_ID>"));
         }
         catch (System.Exception e)
         {
@@ -54,7 +55,7 @@ public class echoAR : MonoBehaviour
 
     }
 
-    IEnumerator QueryDatabase(string serverURL)
+    public IEnumerator QueryDatabase(string serverURL)
     {
         // Create a new request
         UnityWebRequest www = UnityWebRequest.Get(serverURL);
