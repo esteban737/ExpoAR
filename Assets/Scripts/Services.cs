@@ -3,11 +3,8 @@ using UnityEngine;
 
 public class Services : MonoBehaviour
 {
-    [SerializeField]
-    GameObject echoPreFab = (GameObject) AssetDatabase.LoadAssetAtPath("Assets/echoAr/echoAr.prefab", typeof(GameObject));
-
     // Start is called before the first frame update
-    public GameObject setCompany(string company)
+    public GameObject setCompany(GameObject echoPreFab, string company)
     {
         GameObject echo = GameObject.Find("echoAR");
         if (echo)
