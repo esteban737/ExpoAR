@@ -1,10 +1,16 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Services : MonoBehaviour
 {
+    [SerializeField] GameObject echoPreFab;
+    
     // Start is called before the first frame update
-    public GameObject setCompany(GameObject echoPreFab, string company)
+     void Start()
+    {
+        
+    }
+
+    public void setCompany(string company)
     {
         GameObject echo = GameObject.Find("echoAR");
         if (echo)
@@ -19,8 +25,7 @@ public class Services : MonoBehaviour
         }
 
         echo.GetComponent<echoAR>().company = company;
-
-        return echo;
+        echo.GetComponent<echoAR>().Init();
     }
 
 }
