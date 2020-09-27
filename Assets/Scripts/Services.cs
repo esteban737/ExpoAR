@@ -13,12 +13,18 @@ public class Services : MonoBehaviour
     public void setCompany(string company)
     {
         GameObject echo = GameObject.Find("echoAR(Clone)");
-        if (echo) Destroy(echo);
-        
-        echo = Instantiate(echoPreFab, Vector3.zero, Quaternion.identity);
+        GameObject arsession = GameObject.Find("AR Session Origin");
+        PlaceOnPlane script = arsession.GetComponent<PlaceOnPlane>();
 
-        echo.GetComponent<echoAR>().company = company;
-        echo.GetComponent<echoAR>().Init();
+        if (script.m_Anchors.Count > 0)
+        {
+            if (echo) Destroy(echo);
+
+            echo = Instantiate(echoPreFab, script.m_Anchors[0].transform.position, Quaternion.identity);
+
+            echo.GetComponent<echoAR>().company = company;
+            echo.GetComponent<echoAR>().Init();
+        }
     }
 
 }
