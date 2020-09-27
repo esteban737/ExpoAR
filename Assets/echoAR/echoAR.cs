@@ -16,9 +16,13 @@ using AsImpL;
 using Siccity.GLTFUtility;
 using System.Globalization;
 using UnityEngine.Video;
+using UnityEngine.UI;
 
 public class echoAR : MonoBehaviour
 {
+    private GameObject loadingBar;
+    private Slider slider;
+
 
     // Your echoAR API key
     public string APIKey = "<YOUR_API_KEY>";
@@ -30,6 +34,10 @@ public class echoAR : MonoBehaviour
 
     public void Init()
     {
+        Loader loadingComponent = GameObject.Find("AR Session Origin").GetComponent<Loader>();
+
+        loadingBar = loadingComponent.loadingBar;
+        slider = loadingComponent.slider;
         // Debug logs control
         #if UNITY_EDITOR
             Debug.unityLogger.logEnabled = true;
@@ -62,14 +70,18 @@ public class echoAR : MonoBehaviour
 
         Debug.Log("Querying database...");
 
+        loadingBar.SetActive(true);
+
         // Yield for the request
         yield return www.SendWebRequest();
 
         // Wait for the request to finish
         while (!www.isDone)
-        {
+        {     
             yield return null;
         }
+        
+        loadingBar.SetActive(false);
 
         string json = "not found";
         // Check for errors
