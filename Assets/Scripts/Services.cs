@@ -12,17 +12,10 @@ public class Services : MonoBehaviour
 
     public void setCompany(string company)
     {
-        GameObject echo = GameObject.Find("echoAR");
-        if (echo)
-        {
-            Vector3 pos = echo.transform.position;
-            Destroy(echo);
-            echo = Instantiate(echoPreFab, pos, Quaternion.identity);
-        }
-        else
-        {
-            echo = Instantiate(echoPreFab, Vector3.zero, Quaternion.identity);
-        }
+        GameObject echo = GameObject.Find("echoAR(Clone)");
+        if (echo) Destroy(echo);
+        
+        echo = Instantiate(echoPreFab, Vector3.zero, Quaternion.identity);
 
         echo.GetComponent<echoAR>().company = company;
         echo.GetComponent<echoAR>().Init();
